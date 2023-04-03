@@ -40,7 +40,7 @@ jobs:
         with:
           context: .
           build-args: |
-            "RELEASE=${{ steps.meta.outputs.labels }}"
+            "RELEASE=${{ steps.meta.outputs.tags }}"
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
