@@ -1,6 +1,7 @@
 # Thanks to https://github.com/esphome/issues/issues/3517#issuecomment-1369256899
 
-FROM ghcr.io/esphome/esphome:2023.3
+ARG RELEASE
+FROM ghcr.io/esphome/esphome:${RELEASE}
 
 RUN set -ex \
  && apt-get update && apt-get install -y --no-install-recommends avahi-daemon libnss-mdns \
