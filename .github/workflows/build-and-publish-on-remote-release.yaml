@@ -19,8 +19,8 @@ on:
     #  - cron: '*/5 * * * *'
 
 env:
-  REMOTE_LATEST_RELEASE=$(curl -s "https://api.github.com/repos/esphome/esphome/releases/latest" | jq -r .tag_name)
-  LOCAL_LATEST_RELEASE=$(curl -s "https://api.github.com/repos/vxav/esphome-avahi/releases/latest" | jq -r .tag_name)
+  REMOTE_LATEST_RELEASE: $(curl -s "https://api.github.com/repos/esphome/esphome/releases/latest" | jq -r .tag_name)
+  LOCAL_LATEST_RELEASE: $(curl -s "https://api.github.com/repos/vxav/esphome-avahi/releases/latest" | jq -r .tag_name)
 
 jobs:
   build-and-push-image:
