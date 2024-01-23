@@ -52,6 +52,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
+          build-args: |
+            "RELEASE=${{ steps.get-remote-release.outputs.REMOTE_LATEST_RELEASE }}"
           push: true
           tags: vxav/esphome-avahi:${{ steps.get-remote-release.outputs.REMOTE_LATEST_RELEASE }}
 
