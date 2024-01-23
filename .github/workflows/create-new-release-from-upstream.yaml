@@ -13,7 +13,7 @@ name: Create matching latest upstream release
 
 on:
   schedule:
-    - cron:  '*45 0 * * *'
+    - cron: '*45 0 * * *'
 
 jobs:
   build-push-release:
