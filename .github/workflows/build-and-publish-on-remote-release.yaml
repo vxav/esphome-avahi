@@ -58,7 +58,6 @@ jobs:
           tags: vxav/esphome-avahi:${{ steps.get-remote-release.outputs.REMOTE_LATEST_RELEASE }}
 
       - name: Create GitHub release
-        if: steps.check-tags.outputs.TAGS_DIFFERENT == '0'  # Only run if tags are different
         uses: softprops/action-gh-release@v1
         with:
           files: ''  # Update with the path to your release artifact
@@ -66,4 +65,4 @@ jobs:
           title: Release ${{ steps.get-remote-release.outputs.REMOTE_LATEST_RELEASE }}
           body: ${{ steps.get-remote-release.outputs.REMOTE_RELEASE_BODY }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
