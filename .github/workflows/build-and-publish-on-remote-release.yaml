@@ -71,4 +71,4 @@ jobs:
           title: Release ${{ needs.check-releases.outputs.release_version }}
           body: $(curl -s "https://api.github.com/repos/esphome/esphome/releases/latest" | jq -r .body)
         env:
-          RELEASE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
