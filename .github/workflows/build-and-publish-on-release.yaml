@@ -9,7 +9,7 @@
 
 # https://docs.github.com/en/actions/publishing-packages/publishing-docker-images#publishing-images-to-docker-hub
 
-name: Publish Docker image
+name: Build and Push Docker image on new release
 
 on:
   release:
