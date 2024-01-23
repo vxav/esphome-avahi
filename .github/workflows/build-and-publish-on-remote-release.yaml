@@ -13,7 +13,7 @@ name: Publish Docker image with Avahi on remote release
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Run every hour at minute 0.
+    - cron: '*/5 * * * *'
 
 jobs:
   check-releases:
