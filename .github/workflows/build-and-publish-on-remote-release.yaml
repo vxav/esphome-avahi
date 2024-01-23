@@ -47,7 +47,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: '.'  # Update with the path to your release artifact
-          tag_name: ${{ env.REMOTE_LATEST_RELEASE" }}
+          tag_name: "${{ env.REMOTE_LATEST_RELEASE" }}"
           title: Release ${{ env.REMOTE_LATEST_RELEASE" }}
           body: $(curl -s "https://api.github.com/repos/esphome/esphome/releases/latest" | jq -r .body)
         env:
