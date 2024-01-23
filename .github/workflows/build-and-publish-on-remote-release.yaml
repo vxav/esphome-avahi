@@ -46,7 +46,6 @@ jobs:
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v1
-
         with:
           files: '.'  # Update with the path to your release artifact
           tag_name: "${{ env.REMOTE_LATEST_RELEASE" }}"
