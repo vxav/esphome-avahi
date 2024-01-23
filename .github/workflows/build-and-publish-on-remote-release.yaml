@@ -18,36 +18,15 @@ on:
     #schedule:
     #  - cron: '*/5 * * * *'
 
+env:
+  REMOTE_LATEST_RELEASE=$(curl -s "https://api.github.com/repos/esphome/esphome/releases/latest" | jq -r .tag_name)
+  LOCAL_LATEST_RELEASE=$(curl -s "https://api.github.com/repos/vxav/esphome-avahi/releases/latest" | jq -r .tag_name)
+
 jobs:
-  check-releases:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check for new releases
-        id: check-releases
-        run: |
-          REMOTE_LATEST_RELEASE=$(curl -s "https://api.github.com/repos/esphome/esphome/releases/latest" | jq -r .tag_name)
-          LOCAL_LATEST_RELEASE=$(curl -s "https://api.github.com/repos/vxav/esphome-avahi/releases/latest" | jq -r .tag_name)
-
-          # Check if the request was successful
-          if [ $? -eq 0 ]; then
-            if [ "$REMOTE_LATEST_RELEASE" != "$LOCAL_LATEST_RELEASE" ]; then
-              echo "New release detected: $REMOTE_LATEST_RELEASE"
-              echo "::set-output name=new_release::true"
-              echo "::set-output name=release_version::$REMOTE_LATEST_RELEASE"
-            else
-              echo "No new releases"
-              echo "::set-output name=new_release::false"
-            fi
-          else
-            echo "Failed to fetch release information"
-            echo "::set-output name=new_release::false"
-          fi
-
   build-and-push-image:
     needs: check-releases
     runs-on: ubuntu-latest
-    if: ${{ needs.check-releases.outputs.new_release == 'true' }}
+    if: ${{ env.REMOTE_LATEST_RELEASE != env.LOCAL_LATEST_RELEASE }}
 
     steps:
       - name: Checkout repository
@@ -64,14 +43,14 @@ jobs:
         with:
           context: .
           push: true
-          tags: vxav/esphome-avahi:"$REMOTE_LATEST_RELEASE"
+          tags: vxav/esphome-avahi:${{ env.REMOTE_LATEST_RELEASE" }}
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v1
         with:
           files: '.'  # Update with the path to your release artifact
-          tag_name: ${{ needs.check-releases.outputs.release_version }}
-          title: Release ${{ needs.check-releases.outputs.release_version }}
+          tag_name: ${{ env.REMOTE_LATEST_RELEASE" }}
+          title: Release ${{ env.REMOTE_LATEST_RELEASE" }}
           body: $(curl -s "https://api.github.com/repos/esphome/esphome/releases/latest" | jq -r .body)
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
