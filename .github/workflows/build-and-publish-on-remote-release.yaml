@@ -38,20 +38,3 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          tags: "vxav/esphome-avahi:${{ env.REMOTE_LATEST_RELEASE" }}"
-
-      - name: Create GitHub release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: '.'  # Update with the path to your release artifact
-          tag_name: "${{ env.REMOTE_LATEST_RELEASE" }}"
-          title: Release ${{ env.REMOTE_LATEST_RELEASE" }}
-          body: $(curl -s "https://api.github.com/repos/esphome/esphome/releases/latest" | jq -r .body)
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
